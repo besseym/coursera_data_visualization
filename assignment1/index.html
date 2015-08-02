@@ -2,24 +2,131 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title></title>
+    <title>Data Visualization: Programming Assignment 1</title>
+
+    <link rel="stylesheet" type="text/css" href="styles/app.css">
+
 </head>
 <body>
 
-<h1>Data Visualization: Programming Assignment 1</h1>
+<section class="container-fluid">
 
-<p>This is the first assignment for the Data Visualization. This class is one of several required classes in the <a href="https://www.coursera.org/specialization/datamining/20?utm_medium=catalog">Coursera Data Mining Specialization</a></p>
-<p>The data visualized in the following chart was gathered from the Goddard Institute for Space Studies. The data consists of world temperatures </p>
+    <div class="container-fixed">
 
-<p>
-    <q>Table Data: Global and Hemispheric Monthly Means and Zonal Annual Means.</q>
-    <a href="http://data.giss.nasa.gov/gistemp/">http://data.giss.nasa.gov/gistemp/</a>
-</p>
+        <h1>Data Visualization: Programming Assignment 1</h1>
+        <p>
+            by<br>
+            Michael Bessey<br>
+            on August 1st, 2015
+        </p>
 
-<figure>
-    <img src="decade_by_month.png">
-    <figcaption>Global Temp by Month</figcaption>
-</figure>
+        <div class="grid">
+
+            <div class="row">
+
+                <div class="col6">
+
+                    <h2>Background</h2>
+
+                    <p>This is the first assignment in the Coursera Course on Data Visualization. This class is one of several required classes in the <a href="https://www.coursera.org/specialization/datamining/20?utm_medium=catalog">Data Mining Specialization</a>.</p>
+                    <p>The goal of this assignment is to gain some experience with handling and deciding how to visualize some data and to get a feel for the various aspects of the visualization.</p>
+                    <p>This assignment will also help me analyze other visualizations and assess their effectiveness.</p>
+
+                </div>
+
+                <div class="col6">
+
+                    <h2>Data</h2>
+                    <p>
+                        The data visualized in the following charts came from the NASA's Goddard Institute for Space Studies (GISS). The data consists of world surface temperatures updated every month using current data files from NOAA GHCN v3 (meteorological stations), ERSST v4 (ocean areas), and SCAR (Antarctic stations).
+                        <br><a target="_blank" href="http://data.giss.nasa.gov/gistemp/">http://data.giss.nasa.gov/gistemp/</a>
+                    </p>
+                    <p>
+                        Specifically the visualized data came from <q>Table Data: Global and Hemispheric Monthly Means and Zonal Annual Means</q> under <q>Combined Land-Surface Air and Sea-Surface Water Temperature Anomalies (Land-Ocean Temperature Index, LOTI)</q>. This table data consists of plain text files in tabular format of temperature anomalies, i.e. deviations from the corresponding 1951-1980 means.
+                    </p>
+
+                </div>
+
+            </div>
+        </div>
+
+        <h2>Visualizations</h2>
+
+        <h3>Average Global Temperature over Time</h3>
+        <figure class="img-max">
+            <a href="images/temp_total.png">
+                <img src="images/temp_total.png">
+            </a>
+            <figcaption>
+                <h6>Data Source:</h6>
+                <ul>
+                    <li>
+                        Zonal annual means, 1880-present, updated through most recent completed year
+                    </li>
+                    <li>
+                        <em>Annual mean Land-Ocean Temperature Index in .01 degrees Celsius - selected zonal means</em>
+                    </li>
+                    <li>
+                        <a target="_blank" href="http://data.giss.nasa.gov/gistemp/tabledata_v3/ZonAnn.Ts+dSST.txt">http://data.giss.nasa.gov/gistemp/tabledata_v3/ZonAnn.Ts+dSST.txt</a>
+                    </li>
+                </ul>
+            </figcaption>
+        </figure>
+
+        <br>
+
+        <h3>Average Global Temperature over Time by Month</h3>
+        <figure class="img-max">
+            <a href="images/temp_by_month.png">
+                <img src="images/temp_by_month.png">
+            </a>
+            <figcaption>
+                <h6>Data Source:</h6>
+                <ul>
+                    <li>
+                        Global-mean monthly, seasonal, and annual means, 1880-present, updated through most recent month
+                    </li>
+                    <li>
+                        <em>GLOBAL Land-Ocean Temperature Index in 0.01 degrees Celsius</em>
+                    </li>
+                    <li>
+                        <a target="_blank" href="http://data.giss.nasa.gov/gistemp/tabledata_v3/GLB.Ts+dSST.txt">http://data.giss.nasa.gov/gistemp/tabledata_v3/GLB.Ts+dSST.txt</a>
+                    </li>
+                </ul>
+            </figcaption>
+        </figure>
+
+        <br>
+
+        <h3>Average Global Temperature over Time by Zone</h3>
+        <figure class="img-max">
+            <a href="images/temp_by_latitude.png">
+                <img src="images/temp_by_latitude.png">
+            </a>
+            <figcaption>
+                <h6>Data Source:</h6>
+                <ul>
+                    <li>
+                        Zonal annual means, 1880-present, updated through most recent completed year.
+                    </li>
+                    <li>
+                        <em>Annual mean Land-Ocean Temperature Index in .01 degrees Celsius - selected zonal means</em>
+                    </li>
+                    <li>
+                        <a target="_blank" href="http://data.giss.nasa.gov/gistemp/tabledata_v3/ZonAnn.Ts+dSST.txt">http://data.giss.nasa.gov/gistemp/tabledata_v3/ZonAnn.Ts+dSST.txt</a>
+                    </li>
+                </ul>
+            </figcaption>
+        </figure>
+
+        <h2>Conclusion</h2>
+        <p id="conclusion">
+            There is a clear trend which indicates a dramatic increase in the average global surface temperature the over last century.
+        </p>
+
+    </div>
+
+</section>
 
 </body>
 </html>
