@@ -32,17 +32,17 @@ head(df_glob_decade_agg)
 
 c(253,192,134) / 255
 
-c_alpha <- 0.3
+c_alpha <- 0.25
 
 p <- ggplot()
 p <- p + geom_line(data = df_hem_m, size = 1.5, aes(x=Year, y=value, group=Hem, color=Hem))
-p <- p + scale_colour_manual(name = "Location", values = c("Glob" = rgb(0.4980392, 0.7882353, 0.4980392,1.0), "NHem" = rgb(0.9921569, 0.7529412, 0.5254902, c_alpha), "SHem" = rgb(0.7450980, 0.6823529, 0.8313725, c_alpha)), labels = c("Glob" = "Global", "NHem" = "N. Hemisphere", "SHem" = "S. Hemisphere"))
+p <- p + scale_colour_manual(name = "", values = c("Glob" = rgb(0.4980392, 0.7882353, 0.4980392,0.75), "NHem" = rgb(0.9921569, 0.7529412, 0.5254902, c_alpha), "SHem" = rgb(0.7450980, 0.6823529, 0.8313725, c_alpha)), labels = c("Glob" = "Global", "NHem" = "N. Hemisphere", "SHem" = "S. Hemisphere"))
 p <- p + geom_point(data = df_glob_decade_agg, size = 5, aes(x=Year, y=Mean_Temp)) 
 p <- p + geom_text(data = df_glob_decade_agg, aes(x = Year, y = Mean_Temp, family="Arial", fontface="italic", label = paste(Mean_Temp, "°C in ", Year, sep = ""), hjust=0.3, vjust=-1.0))
 p <- p + labs(x = "Year", y = "Temperature in °C")
 p <- p + theme_bw() # + guides(colour=guide_legend(title="Avg. Temp in given Year"))
 p <- p + theme(legend.key = element_rect(size = 0), panel.border = element_rect(size = 0))
-#p <- p + annotate("text", label = "Points indicate average temperature in specified year.", x = median(df_hem_m$Year), y = 75, size = 5)
+p <- p + annotate("text", label = "Points indicate average temperature in specified year.", x = median(df_hem_m$Year), y = 75, size = 5)
 p
 
 saveChart(p, "temp_total")
