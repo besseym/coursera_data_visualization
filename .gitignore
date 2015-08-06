@@ -1,2 +1,9 @@
 assignment1/.idea
 .Rhistory
+*.pyc
+eclipse/.metadata
+eclipse/.recommenders
+eclipse/graph/.settings
+eclipse/RemoteSystemsTempFiles
+.project
+.classpath
