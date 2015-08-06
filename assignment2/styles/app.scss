@@ -1,12 +1,52 @@
 
 
+.chart {
 
-.node {
-  stroke: #fff;
-  stroke-width: 1.5px;
-}
+  position: relative;
 
-.link {
-  stroke: #999;
-  stroke-opacity: .6;
+  &.chart-graph {
+
+    width: 2048px; height: 1048px;
+
+    svg {
+
+      float: left;
+      width: 60%; height: 100%;
+      padding: 0; margin: 0;
+
+      circle {
+
+        cursor: pointer;
+        cursor: hand;
+      }
+
+      .node {
+        stroke: #fff;
+        stroke-width: 1.5px;
+      }
+
+      .link {
+        stroke: #999;
+        stroke-opacity: .6;
+      }
+    }
+
+    .chart-info-panel {
+
+      float: right; width: 40%;
+      padding: 0; margin: 0;
+
+      font-size: 1.5em;
+      padding: 10px;
+      line-height: 20px;
+
+      //visibility: hidden;
+
+      //position: absolute;
+      //background-color: rgba(255, 255, 255, 0.7);
+    }
+
+  }
+
+
 }
