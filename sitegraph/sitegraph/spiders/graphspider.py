@@ -10,13 +10,13 @@ from sitegraph.items import SitegraphItem
 
 class GraphspiderSpider(CrawlSpider):
     name = "graphspider"
-    allowed_domains = ["www.sho.com"]
+    allowed_domains = ["smithsonianchannel.com"]
     start_urls = (
-        'http://www.sho.com/sho/series',
+        'http://www.smithsonianchannel.com/',
     )
 
     rules = (
-    	Rule(SgmlLinkExtractor(allow=r'/sho'), callback='parse_item', follow=True),
+    	Rule(SgmlLinkExtractor(allow=r'/'), callback='parse_item', follow=True),
     )
 
     def parse_item(self, response):
