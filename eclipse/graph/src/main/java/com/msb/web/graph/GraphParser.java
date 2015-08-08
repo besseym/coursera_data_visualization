@@ -31,8 +31,8 @@ public class GraphParser {
 	 */
 	public GraphParser() {
 		
-		this.inputPath = "/Users/besseym/Personal/Education/Coursera/DataMining/DataVisualization/projects/sitegraph.json";
-		this.outputPath = "/Users/besseym/Personal/Education/Coursera/DataMining/DataVisualization/projects/assignment2/data/graph.json";
+		this.inputPath = "/Users/besseym/Personal/Education/Coursera/DataMining/DataVisualization/projects/sitegraph_sc.json";
+		this.outputPath = "/Users/besseym/Personal/Education/Coursera/DataMining/DataVisualization/projects/assignment2/data/graph_sc.json";
 		
 		this.objectMapper = new ObjectMapper();
 		this.objectMapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -52,10 +52,17 @@ public class GraphParser {
 			reader = new BufferedReader(new FileReader(this.inputPath));
 			
 			PageNode pageNode = null;
+			
+			String url = null;
 			String line = reader.readLine();
 		    while (line != null) {
 		        
 		        pageNode = this.objectMapper.readValue(line, PageNode.class);
+		        if(doIgnore(pageNode)){
+		        	line = reader.readLine();
+		        	continue;
+		        }
+		        
 		        pageNodeList.add(pageNode);
 		        
 		        line = reader.readLine();
@@ -75,6 +82,9 @@ public class GraphParser {
 			 writer = new PrintWriter(this.outputPath);
 			 
 			 Graph graph = extractGraph(pageNodeList);
+			 
+			 System.out.println(graph);
+			 
 			 this.objectMapper.writeValue(writer, graph);
 		 }
 		 finally {
@@ -83,6 +93,24 @@ public class GraphParser {
 				writer.close();
 			}
 		}
+	}
+	
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
+	private boolean doIgnore(PageNode pageNode){
+		
+		boolean ignore = true;
+		
+		String url = pageNode.getUrl().trim();
+		
+		if(url != null){
+			ignore = !url.startsWith("http://www.smithsonianchannel.com/shows/aerial-america/701") || url.contains("?");
+		}
+		
+		return ignore;
 	}
 	
 	public Graph extractGraph(List<PageNode> pageNodeList){
@@ -97,16 +125,17 @@ public class GraphParser {
 		GraphNode graphNode = null;
 		GraphLink graphLink = null;
 		
-		PageNode pageNode = null;
-		for(int i = 0; i < pageNodeList.size(); i++){
+		for(PageNode pageNode : pageNodeList){
 			
-			pageNode = pageNodeList.get(i);
 			name = pageNode.getUrl().trim();
 			
-			graphNode = new GraphNode(Integer.valueOf(i));
-			graphNode.setUrl(name);
-			
-			graphNodeMap.put(name, graphNode);
+			if(!graphNodeMap.containsKey(name)){
+				
+				graphNode = new GraphNode(Integer.valueOf(graphNodeMap.size()));
+				graphNode.setUrl(name);
+				
+				graphNodeMap.put(name, graphNode);
+			}
 		}
 		
 		String graphLinkKey = null;
@@ -119,12 +148,11 @@ public class GraphParser {
 		
 		Map<String, GraphLink> graphLinkMap = new HashMap<String, GraphLink>();
 		
-		for(int i = 0; i < pageNodeList.size(); i++){
+		for(PageNode pageNode : pageNodeList){
 			
 			sourceIndex = null;
 			targetIndex = null;
 			
-			pageNode = pageNodeList.get(i);
 			name = pageNode.getUrl().trim();
 			
 			graphNodeSource = graphNodeMap.get(name);
@@ -162,9 +190,15 @@ public class GraphParser {
 		for(String k : graphLinkMap.keySet()){
 			
 			graphLink = graphLinkMap.get(k);
+			
 			graphNode = graphNodeMap.get(graphLink.getSourceUrl());
 			if(graphNode != null){
-				graphNode.getLinkList().add(graphLink);
+				graphNode.getSourceLinkList().add(graphLink);
+			}
+			
+			graphNode = graphNodeMap.get(graphLink.getTargetUrl());
+			if(graphNode != null){
+				graphNode.getTargetLinkList().add(graphLink);
 			}
 		}
 		

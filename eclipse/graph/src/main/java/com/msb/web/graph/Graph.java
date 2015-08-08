@@ -52,4 +52,12 @@ public class Graph {
 		this.links = links;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Graph [nodes count : " + nodes.size() + ", link count : " + links.size() + "]";
+	}
+
 }

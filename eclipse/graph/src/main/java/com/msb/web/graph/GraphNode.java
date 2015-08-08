@@ -20,7 +20,8 @@ public class GraphNode implements Comparable<GraphNode> {
 	
 	private String url;
 	
-	private List<GraphLink> linkList;
+	private List<GraphLink> sourceLinkList;
+	private List<GraphLink> targetLinkList;
 	
 	/**
 	 * 
@@ -31,7 +32,8 @@ public class GraphNode implements Comparable<GraphNode> {
 		this.fixed = Boolean.FALSE;
 		this.weight = Integer.valueOf(1);
 		
-		this.linkList = new ArrayList<GraphLink>();
+		this.sourceLinkList = new ArrayList<GraphLink>();
+		this.targetLinkList = new ArrayList<GraphLink>();
 	}
 	
 	public GraphNode(Integer index) {
@@ -46,14 +48,16 @@ public class GraphNode implements Comparable<GraphNode> {
 	 */
 	public void sortLinks(){
 		
-		Collections.sort(this.linkList, new Comparator<GraphLink>(){
+		Comparator c = new Comparator<GraphLink>(){
 
 			@Override
 			public int compare(GraphLink g1, GraphLink g2) {
 				return g1.getTargetUrl().toLowerCase().compareTo(g2.getTargetUrl().toLowerCase());
 			}
-			
-		});
+		};
+		
+		Collections.sort(this.sourceLinkList, c);
+		Collections.sort(this.targetLinkList, c);
 	}
 
 	/**
@@ -113,17 +117,31 @@ public class GraphNode implements Comparable<GraphNode> {
 	}
 
 	/**
-	 * @return the linkList
+	 * @return the sourceLinkList
 	 */
-	public List<GraphLink> getLinkList() {
-		return linkList;
+	public List<GraphLink> getSourceLinkList() {
+		return sourceLinkList;
 	}
 
 	/**
-	 * @param linkList the linkList to set
+	 * @param sourceLinkList the sourceLinkList to set
 	 */
-	public void setLinkList(List<GraphLink> linkList) {
-		this.linkList = linkList;
+	public void setSourceLinkList(List<GraphLink> sourceLinkList) {
+		this.sourceLinkList = sourceLinkList;
+	}
+
+	/**
+	 * @return the targetLinkList
+	 */
+	public List<GraphLink> getTargetLinkList() {
+		return targetLinkList;
+	}
+
+	/**
+	 * @param targetLinkList the targetLinkList to set
+	 */
+	public void setTargetLinkList(List<GraphLink> targetLinkList) {
+		this.targetLinkList = targetLinkList;
 	}
 
 	/*
