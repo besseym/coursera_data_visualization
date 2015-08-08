@@ -11,8 +11,10 @@
                 .charge(-220)
                 .linkDistance(300)
                 .size([width, height]),
-            tooltip = chart.select(".chart-info-panel"),
-            currentStartNode;
+            infoPanel = chart.select(".chart-info-panel"),
+            currentStartNode,
+            startFill = "#00ff00",
+            endFill = "#ff0000";
 
         d3.json("data/graph.json", function(error, graph) {
             if (error) throw error;
@@ -25,6 +27,7 @@
                         return "link_" + d.id;
                     })
                     .style("stroke-width", function(d) { return Math.sqrt(d.value); }),
+
                 node = svg.selectAll(".node")
                     .data(graph.nodes)
                     .enter().append("circle")
@@ -38,51 +41,8 @@
                     })
                     //.style("fill", function(d) { return color(d.group); })
                     //.call(force.drag);
-                    .on("mouseover", function(d, i){
-
-                        var i = 0,
-                            currentEndNode,
-                            currentLink,
-                            node = d3.select(this),
-                            x = node.attr('cx'),
-                            y = node.attr('cy'),
-                            urlTooltip = tooltip.select("#url"),
-                            weightTooltip = tooltip.select("#weight"),
-                            linkListTooltip = tooltip.select("#link-list"),
-                            newTooltipStyleLocation = getNewStyleLocation(x, y, tooltip.node().getBoundingClientRect(), chart.node().getBoundingClientRect());
-
-                        if(currentStartNode !== undefined){
-                            currentStartNode.style({'fill': null});
-                        }
-                        currentStartNode = d3.select("#node_" + d.index);
-                        currentStartNode.style({'fill': "#00ff00"});
-
-                        urlTooltip.select("a").text(d.url).attr("href", d.url);
-                        weightTooltip.text(d.weight);
-
-                        linkListTooltip.selectAll("li").remove();
-                        linkListTooltip
-                            .selectAll("li")
-                            .data(d.linkList)
-                            .enter()
-                            .append("li")
-                            .append("a")
-                            .attr("href", function(d, i){
-                                return d.targetUrl;
-                            })
-                            .text(function(d, i){
-                                return d.targetUrl;
-                            })
-                            .on("mouseover", function(d, i){
-                                currentEndNode = d3.select("#node_" + d.target);
-                                currentEndNode.style({'fill': "#ff0000"});
-                                currentLink = d3.select("#link_" + d.id);
-                                currentLink.style({'stroke': "#ff0000", 'stroke-opacity': 1.0});
-                            })
-                            .on("mouseout", function(d, i){
-                                currentEndNode.style({'fill': null});
-                                currentLink.style({'stroke': null, 'stroke-opacity': null});
-                            });
+                    .on("click", function(d, i){
+                        setCurrentStartNode(d.index);
                     });
 
             node.append("title").text(function(d) { return d.url; });
@@ -103,28 +63,99 @@
                 .links(graph.links)
                 .start();
 
-            //console.log(graph.nodes);
+
+            function setCurrentStartNode(index){
+
+                var i = 0,
+                    d = graph.nodes[index],
+                    currentEndNode,
+                    currentLink,
+                    urlInfoPanel = infoPanel.select("#url"),
+                    externalLink = infoPanel.select("#external-link"),
+                    weightInfoPanel = infoPanel.select("#weight"),
+                    sourceEdgeListElement = infoPanel.select("#edge-list-source"),
+                    targetEdgeListElement = infoPanel.select("#edge-list-target");
+
+                if(currentStartNode !== undefined){
+                    currentStartNode.style({'fill': null});
+                }
+
+                currentStartNode = d3.select("#node_" + d.index);
+                currentStartNode.style({'fill': startFill});
+
+                infoPanel.style({"visibility": "visible"});
+
+                urlInfoPanel.text(d.url);
+                externalLink.attr("href", d.url);
+                weightInfoPanel.text(d.weight);
+
+                buildLinkListUi(sourceEdgeListElement, d.sourceLinkList, true);
+                buildLinkListUi(targetEdgeListElement, d.targetLinkList, false);
+            }
+
+            function buildLinkListUi(edgeListElement, linkList, isSource){
+
+                edgeListElement.selectAll("li").remove();
+                edgeListElement
+                    .selectAll("li")
+                    .data(linkList)
+                    .enter()
+                    .append("li")
+                    .text(function(d, i){
+
+                        var url = d.sourceUrl;
+                        if(isSource){
+                            url = d.targetUrl;
+                        }
+
+                        return url + " ";
+                    })
+                    .on("mouseover", function(d, i){
+                        currentEndNode = d3.select("#node_" + d.target);
+                        currentEndNode.style({'fill': endFill});
+                        currentLink = d3.select("#link_" + d.id);
+                        currentLink.style({'stroke': endFill, 'stroke-opacity': 1.0});
+                    })
+                    .on("mouseout", function(d, i){
+
+                        currentEndNode.style({'fill': null});
+                        if(currentEndNode.index == currentStartNode.index) {
+                            currentStartNode.style({'fill': startFill});
+                        }
+                        currentLink.style({'stroke': null, 'stroke-opacity': null});
+                    })
+                    .on("click", function(d, i){
+                        currentLink.style({'stroke': null, 'stroke-opacity': null});
+
+                        if(isSource) {
+                            setCurrentStartNode(d.target);
+                        }
+                        else {
+                            setCurrentStartNode(d.source);
+                        }
+                    })
+                    .append("a")
+                    .attr("target", "_blank")
+                    .attr("href", function(d, i){
+
+                        var url = d.sourceUrl;
+                        if(isSource){
+                            url = d.targetUrl;
+                        }
+
+                        return url + " ";
+                    })
+                    .append("i")
+                    .attr("class", "fa fa-external-link");
+            }
         });
 
-        console.log(width + " : " + height);
+
+
+        //console.log(width + " : " + height);
     }
 
-    function getNewStyleLocation (x, y, innerRect, outerRect){
 
-        var styleLocation = {left: x + "px", top: y + "px", right: undefined, bottom: undefined};
-
-        if((x + innerRect.width) > outerRect.width){
-            styleLocation.left = undefined;
-            styleLocation.right = (outerRect.width - x) + "px";
-        }
-
-        if((y + innerRect.height) > outerRect.height){
-            styleLocation.top = undefined;
-            styleLocation.bottom = (outerRect.height - y) + "px";
-        }
-
-        return styleLocation;
-    }
 
 
     window.onload = function () {

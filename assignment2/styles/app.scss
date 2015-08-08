@@ -1,4 +1,7 @@
 
+body {
+  font-size: 0.8em;
+}
 
 .chart {
 
@@ -40,7 +43,31 @@
       padding: 10px;
       line-height: 20px;
 
-      //visibility: hidden;
+      #url {
+        font-weight: bolder;
+        cursor: pointer;
+      }
+
+      .edge-list {
+
+        cursor: pointer;
+        cursor: hand;
+
+      }
+
+      #edge-list-source {
+
+        li:hover {
+          color: #ff0000;
+        }
+      }
+
+      #edge-list-target {
+
+        li:hover {
+          color: #00ff00;
+        }
+      }
 
       //position: absolute;
       //background-color: rgba(255, 255, 255, 0.7);

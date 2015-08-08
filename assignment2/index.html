@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Data Visualization: Programming Assignment 2</title>
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="styles/app.css">
 
 </head>
@@ -22,12 +23,14 @@
 
         <div class="chart chart-graph">
             <svg ></svg>
-            <div class="chart-info-panel" style="padding: 0;">
-                <span id="url">
-                    <a href=""></a>
-                </span> -
-                <span id="weight"></span>
-                <ul id="link-list"></ul>
+            <div class="chart-info-panel" style="padding: 0; visibility: hidden;">
+                <span id="url"></span> <em id="weight"></em> <a id="external-link" href=""><i class="fa fa-external-link"></i></a>
+
+                <h4>Is Source Links</h4>
+                <ul id="edge-list-source" class="edge-list"></ul>
+
+                <h4>Is Target Links</h4>
+                <ul id="edge-list-target" class="edge-list"></ul>
             </div>
         </div>
     </div>
