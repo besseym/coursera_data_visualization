@@ -12,26 +12,35 @@
 
 <section class="container-fluid">
 
-    <div class="container-fixed">
+    <h1>Data Visualization: Programming Assignment 2</h1>
+    <p>
+        by<br>
+        Michael Bessey<br>
+        on August 1st, 2015
+    </p>
+    <div id="content-description" class="content-block content-block-2">
+    <p>
+        This is a Network Graph Visualization of my personal website <a href="http://www.michaelbessey.com/">http://www.michaelbessey.com/</a>.
+        The size of each node is based on how many other nodes are connected to it.
+        One can click on a node to reveal a list of its connected nodes.
+        Then one can mouseover that list to highlight the connection between that node and the selected node.
+        Finally, you can click on a node in the list to make it the selected node.
+    </p>
+    </div>
 
-        <h1>Data Visualization: Programming Assignment 2</h1>
-        <p>
-            by<br>
-            Michael Bessey<br>
-            on August 1st, 2015
-        </p>
+    <div class="chart chart-graph">
+        <svg ></svg>
+        <div class="chart-info-panel" style="padding: 0; visibility: hidden;">
 
-        <div class="chart chart-graph">
-            <svg ></svg>
-            <div class="chart-info-panel" style="padding: 0; visibility: hidden;">
-                <span id="url"></span> <em id="weight"></em> <a id="external-link" href=""><i class="fa fa-external-link"></i></a>
+            <h5>Selected Node</h5>
+            <span id="url"></span><a id="external-link" href=""><i class="fa fa-external-link"></i></a><br/>
+            Total connected Links: <em id="weight"></em>
 
-                <h4>Is Source</h4>
-                <ul id="edge-list-source" class="edge-list"></ul>
+            <h6>Where Selected Node Is the Source</h6>
+            <ul id="edge-list-source" class="edge-list"></ul>
 
-                <h4>Is Target</h4>
-                <ul id="edge-list-target" class="edge-list"></ul>
-            </div>
+            <h6>Where Selected Node Is the Target</h6>
+            <ul id="edge-list-target" class="edge-list"></ul>
         </div>
     </div>
 </section>

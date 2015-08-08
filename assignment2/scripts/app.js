@@ -12,9 +12,10 @@
                 .linkDistance(300)
                 .size([width, height]),
             infoPanel = chart.select(".chart-info-panel"),
-            currentStartNode,
-            startFill = "#00ff00",
-            endFill = "#ff0000";
+            selectedNode,
+            selectedColor = "#377eb8",
+            sourceColor = "#4daf4a",
+            targetColor = "#e41a1c";
 
         d3.json("data/graph.json", function(error, graph) {
             if (error) throw error;
@@ -68,20 +69,18 @@
 
                 var i = 0,
                     d = graph.nodes[index],
-                    currentEndNode,
-                    currentLink,
                     urlInfoPanel = infoPanel.select("#url"),
                     externalLink = infoPanel.select("#external-link"),
                     weightInfoPanel = infoPanel.select("#weight"),
                     sourceEdgeListElement = infoPanel.select("#edge-list-source"),
                     targetEdgeListElement = infoPanel.select("#edge-list-target");
 
-                if(currentStartNode !== undefined){
-                    currentStartNode.style({'fill': null});
+                if(selectedNode !== undefined){
+                    selectedNode.style({'fill': null});
                 }
 
-                currentStartNode = d3.select("#node_" + d.index);
-                currentStartNode.style({'fill': startFill});
+                selectedNode = d3.select("#node_" + d.index);
+                selectedNode.style({'fill': selectedColor});
 
                 infoPanel.style({"visibility": "visible"});
 
@@ -94,6 +93,17 @@
             }
 
             function buildLinkListUi(edgeListElement, linkList, isSource){
+
+                var node,
+                    link,
+                    color;
+
+                if(isSource){
+                    color = targetColor;
+                }
+                else {
+                    color = sourceColor;
+                }
 
                 edgeListElement.selectAll("li").remove();
                 edgeListElement
@@ -111,21 +121,28 @@
                         return url + " ";
                     })
                     .on("mouseover", function(d, i){
-                        currentEndNode = d3.select("#node_" + d.target);
-                        currentEndNode.style({'fill': endFill});
-                        currentLink = d3.select("#link_" + d.id);
-                        currentLink.style({'stroke': endFill, 'stroke-opacity': 1.0});
+
+                        if(isSource){
+                            node = d3.select("#node_" + d.target);
+                        }
+                        else {
+                            node = d3.select("#node_" + d.source);
+                        }
+
+                        node.style({'fill': color});
+                        link = d3.select("#link_" + d.id);
+                        link.style({'stroke': color, 'stroke-opacity': 1.0});
                     })
                     .on("mouseout", function(d, i){
 
-                        currentEndNode.style({'fill': null});
-                        if(currentEndNode.index == currentStartNode.index) {
-                            currentStartNode.style({'fill': startFill});
+                        node.style({'fill': null});
+                        if(link.index == selectedNode.index) {
+                            selectedNode.style({'fill': selectedColor});
                         }
-                        currentLink.style({'stroke': null, 'stroke-opacity': null});
+                        link.style({'stroke': null, 'stroke-opacity': null});
                     })
                     .on("click", function(d, i){
-                        currentLink.style({'stroke': null, 'stroke-opacity': null});
+                        link.style({'stroke': null, 'stroke-opacity': null});
 
                         if(isSource) {
                             setCurrentStartNode(d.target);

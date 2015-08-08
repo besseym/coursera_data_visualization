@@ -1,6 +1,17 @@
 
-body {
-  font-size: 0.8em;
+@import '/Users/michaelbessey/Projects/MSB/development/workspace/text/msb-base-static/framework/sass/_reset';
+@import '/Users/michaelbessey/Projects/MSB/development/workspace/text/msb-base-static/framework/sass/_default';
+@import '/Users/michaelbessey/Projects/MSB/development/workspace/text/msb-base-static/framework/sass/_structure';
+@import '/Users/michaelbessey/Projects/MSB/development/workspace/text/msb-base-static/framework/sass/_content';
+
+@import '/Users/michaelbessey/Projects/MSB/development/workspace/text/msb-base-static/framework/sass/_theme_neutral_color';
+@import '/Users/michaelbessey/Projects/MSB/development/workspace/text/msb-base-static/framework/sass/_theme_font_arial_garamond';
+
+@import '/Users/michaelbessey/Projects/MSB/development/workspace/text/msb-base-static/framework/sass/_theme';
+
+#content-description {
+
+  min-height: 13.0em;
 }
 
 .chart {
@@ -9,12 +20,12 @@ body {
 
   &.chart-graph {
 
-    width: 2048px; height: 1048px;
+    width: 1280px; height: 768px;
 
     svg {
 
       float: left;
-      width: 60%; height: 100%;
+      width: 70%; height: 100%;
       padding: 0; margin: 0;
 
       circle {
@@ -25,18 +36,26 @@ body {
 
       .node {
         stroke: #fff;
-        stroke-width: 1.5px;
+        stroke-width: 1px;
       }
 
       .link {
         stroke: #999;
-        stroke-opacity: .6;
+        stroke-opacity: .25;
       }
     }
 
     .chart-info-panel {
 
-      float: right; width: 40%;
+      h5 {
+        font-size: 1.4em;
+      }
+
+      h6 {
+        font-size: 1.2em;
+      }
+
+      float: right; width: 30%;
       padding: 0; margin: 0;
 
       font-size: 1.5em;
@@ -44,6 +63,7 @@ body {
       line-height: 20px;
 
       #url {
+        color: #377eb8;
         font-weight: bolder;
         cursor: pointer;
       }
@@ -58,14 +78,14 @@ body {
       #edge-list-source {
 
         li:hover {
-          color: #ff0000;
+          color: #e41a1c;
         }
       }
 
       #edge-list-target {
 
         li:hover {
-          color: #00ff00;
+          color: #4daf4a;
         }
       }
 
