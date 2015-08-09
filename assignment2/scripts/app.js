@@ -12,6 +12,12 @@
                 .linkDistance(300)
                 .size([width, height]),
             infoPanel = chart.select(".chart-info-panel"),
+            sourceEdgeListElement = infoPanel.select("#edge-list-source"),
+            headerSource = infoPanel.select("#header-source"),
+            targetEdgeListElement = infoPanel.select("#edge-list-target"),
+            headerTarget = infoPanel.select("#header-target"),
+            edgeSourceLinksVisible = true,
+            edgeTargetLinksVisible = true,
             selectedNode,
             selectedColor = "#377eb8",
             sourceColor = "#4daf4a",
@@ -46,6 +52,38 @@
                         setCurrentStartNode(d.index);
                     });
 
+            headerSource.on("click", function() {
+
+                console.log("source click");
+
+                if(edgeSourceLinksVisible){
+                    sourceEdgeListElement.selectAll("li").style({"display": "none"});
+                    headerSource.select("i").attr("class", "fa fa-plus-square-o");
+                }
+                else {
+                    sourceEdgeListElement.selectAll("li").style({"display": null});
+                    headerSource.select("i").attr("class", "fa fa-minus-square-o");
+                }
+
+                edgeSourceLinksVisible = !edgeSourceLinksVisible;
+            });
+
+            headerTarget.on("click", function() {
+
+                console.log("target click");
+
+                if(edgeTargetLinksVisible){
+                    targetEdgeListElement.selectAll("li").style({"display": "none"});
+                    headerTarget.select("i").attr("class", "fa fa-plus-square-o");
+                }
+                else {
+                    targetEdgeListElement.selectAll("li").style({"display": null});
+                    headerTarget.select("i").attr("class", "fa fa-minus-square-o");
+                }
+
+                edgeTargetLinksVisible = !edgeTargetLinksVisible;
+            });
+
             node.append("title").text(function(d) { return d.url; });
 
             force.on("tick", function() {
@@ -71,9 +109,12 @@
                     d = graph.nodes[index],
                     urlInfoPanel = infoPanel.select("#url"),
                     externalLink = infoPanel.select("#external-link"),
-                    weightInfoPanel = infoPanel.select("#weight"),
-                    sourceEdgeListElement = infoPanel.select("#edge-list-source"),
-                    targetEdgeListElement = infoPanel.select("#edge-list-target");
+                    weightInfoPanel = infoPanel.select("#weight");
+
+                headerSource.select("i").attr("class", "fa fa-minus-square-o");
+                edgeSourceLinksVisible = true;
+                headerTarget.select("i").attr("class", "fa fa-minus-square-o");
+                edgeTargetLinksVisible = true;
 
                 if(selectedNode !== undefined){
                     selectedNode.style({'fill': null});

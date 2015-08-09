@@ -492,12 +492,18 @@ span.amp {
       .chart.chart-graph .chart-info-panel #url {
         color: #377eb8;
         font-weight: bolder;
-        cursor: pointer; }
+        cursor: default; }
       .chart.chart-graph .chart-info-panel .edge-list {
         cursor: pointer;
         cursor: hand; }
-      .chart.chart-graph .chart-info-panel #edge-list-source li:hover {
-        color: #e41a1c; }
+      .chart.chart-graph .chart-info-panel #edge-list-source {
+        cursor: pointer;
+        cursor: hand; }
+        .chart.chart-graph .chart-info-panel #edge-list-source li:hover {
+          color: #e41a1c; }
+      .chart.chart-graph .chart-info-panel #header-source, .chart.chart-graph .chart-info-panel #header-target {
+        cursor: pointer;
+        cursor: hand; }
       .chart.chart-graph .chart-info-panel #edge-list-target li:hover {
         color: #4daf4a; }
 
