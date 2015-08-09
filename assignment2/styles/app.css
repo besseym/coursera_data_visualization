@@ -455,7 +455,7 @@ span.amp {
   border-top: 1px solid #333; }
 
 #content-description {
-  min-height: 13.0em; }
+  min-height: 16.2em; }
 
 .chart {
   position: relative; }
@@ -490,7 +490,7 @@ span.amp {
       .chart.chart-graph .chart-info-panel h6 {
         font-size: 1.2em; }
       .chart.chart-graph .chart-info-panel #url {
-        color: #377eb8;
+        color: #eead0e;
         font-weight: bolder;
         cursor: default; }
       .chart.chart-graph .chart-info-panel .edge-list {

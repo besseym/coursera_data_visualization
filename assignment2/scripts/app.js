@@ -19,12 +19,40 @@
             edgeSourceLinksVisible = true,
             edgeTargetLinksVisible = true,
             selectedNode,
-            selectedColor = "#377eb8",
+            colorArray = [],
+            scaleColor = d3.scale.category10(),
+            selectedColor = "#eead0e",
             sourceColor = "#4daf4a",
             targetColor = "#e41a1c";
 
         d3.json("data/graph.json", function(error, graph) {
             if (error) throw error;
+
+            var i = 0,
+                u, c, s1,
+                baseUrl = "http://www.michaelbessey.com/";
+
+            //assign color to nodes based on website section
+            for(i = 0; i < graph.nodes.length; i++){
+
+                u = graph.nodes[i].url;
+                if(u.startsWith(baseUrl)){
+
+                    s1 = u.indexOf("/", baseUrl.length);
+                    if(s1 >= 0){
+
+                        c = u.substring(baseUrl.length, s1);
+                        colorArray[i] = scaleColor(c);
+                    }
+                    else {
+                        c = u.substring(baseUrl.length);
+                        colorArray[i] = scaleColor(c);
+                    }
+                }
+                else {
+                    colorArray[i] = "#000000";
+                }
+            }
 
             var link = svg.selectAll(".link")
                     .data(graph.links)
@@ -42,6 +70,9 @@
                         return "node_" + d.index;
                     })
                     .attr("class", "node")
+                    .attr("fill", function(d, i){
+                        return colorArray[i];
+                    })
                     .attr("r", function(d, i){
 
                         return Math.log(parseInt(d.weight)* 100);
