@@ -8,8 +8,8 @@
             width = parseInt(svg.style("width"), 10),
             height = parseInt(svg.style("height"), 10),
             force = d3.layout.force()
-                .charge(-220)
-                .linkDistance(300)
+                .charge(-120)
+                .linkDistance(200)
                 .size([width, height]),
             infoPanel = chart.select(".chart-info-panel"),
             sourceEdgeListElement = infoPanel.select("#edge-list-source"),
